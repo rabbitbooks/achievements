@@ -1,0 +1,281 @@
+.ac_img_wrapper {
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+}
+
+.ac_image {
+    height: 100%;
+    width: 100%;
+}
+
+.ac_edit_item {
+    width: 150px;
+    text-align: center;
+    padding-top: 20px;
+    position: relative;
+}
+
+.ac_edit_item::after {
+    content: attr(data-ac-id);
+    display: inline;
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    font-size: 17px;
+    font-weight: bolder;
+}
+
+.ac_edit_item_overlay {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /*background: aquamarine;*/
+    opacity: 0;
+    pointer-events: none;
+    text-align: center;
+}
+
+.ac_edit_item:hover .ac_edit_item_overlay {
+    opacity: .7;
+}
+
+.ac_edit_item:hover .ac_edit_text,
+.ac_edit_item:hover .ac_delete_text {
+    display: block;
+}
+
+.ac_edit_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ac_edit_text {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    top: 37px;
+    left: 19px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.ac_edit_text:hover,
+.ac_delete_text:hover {
+    background: #fff;
+}
+
+.ac_delete_text {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    top: 73px;
+    left: 29px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.ac_overlay {
+    opacity: 0;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: #0000003d;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+.ac_edit_popup {
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    top: 29%;
+    left: 45%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 10;
+}
+
+.ac_close_popup {
+    position: absolute;
+    right: 16px;
+    top: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/*Вкладки*/
+.tabs {
+    width: 100%;
+    padding: 0px;
+    margin: 0 auto;
+}
+
+.tabs>input {
+    display: none;
+}
+
+.tabs>div {
+    display: none;
+    padding: 12px;
+    background: #FFFFFF;
+}
+
+.tabs>label {
+    display: inline-block;
+    padding: 7px;
+    margin: 0 -5px -1px 0;
+    text-align: center;
+    color: #666666;
+    border: 1px solid #C0C0C0;
+    background: #E0E0E0;
+    cursor: pointer;
+}
+
+.tabs>input:checked + label {
+    color: #000000;
+    border: 1px solid #C0C0C0;
+    border-bottom: 1px solid #FFFFFF;
+    background: #FFFFFF;
+}
+
+#tab_1:checked ~ #txt_1,
+#tab_2:checked ~ #txt_2,
+#tab_3:checked ~ #txt_3,
+#tab_4:checked ~ #txt_4 {
+    display: block;
+}
+/*end Вкладки*/
+
+.ac_title {
+    width: 320px;
+}
+
+.ac_users_to_add li {
+    cursor: pointer;
+}
+
+.ac_users_to_add li span {
+    display: none;
+}
+
+.ac_users_to_add_ready li {
+    display: inline;
+    border: 1px solid black;
+    border-radius: 6px;
+    padding: 0 5px 2px;
+    background-color: antiquewhite;
+    margin-right: 9px;
+}
+
+.ac_users_to_add_ready li span {
+    font-size: 14px;
+    margin-left: 8px;
+    position: relative;
+    bottom: 6px;
+    cursor: pointer;
+}
+
+.ac_add_popup {
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    top: 29%;
+    left: 45%;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 10;
+}
+
+.ac_choice_item {
+    width: 150px;
+    text-align: center;
+    padding-top: 20px;
+    position: relative;
+    cursor: pointer;
+}
+
+.ac_choice_item::after {
+    content: attr(data-ac-id);
+    display: inline;
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    font-size: 17px;
+    font-weight: bolder;
+}
+
+.ac_choice_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ac_choice_text {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    top: 37px;
+    left: 19px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.ac_choice_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ac_user_wrapper {
+    display: flex;
+}
+
+.ac_user_delete_text:hover {
+    background: #fff;
+}
+
+.ac_user_delete_text {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    top: 73px;
+    left: 29px;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.ac_edit_item:hover .ac_user_delete_text {
+    display: block;
+}
+
+/*front styles*/
+.achievements_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.achievements_container .ac_edit_item {
+    width: 110px;
+    padding-top: 10px;
+}
+
+.ac_description {
+    display: none;
+    position: absolute;
+    top: 12px;
+    text-align: center;
+    width: 100%;
+    background-color: white;
+    border-radius: 30%;
+}
+
+.ac_edit_item:hover .ac_description {
+    display: block;
+}
