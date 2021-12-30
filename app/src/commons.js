@@ -11,6 +11,7 @@ const $ac_add_popup = jQuery('.ac_add_popup');
 const $choice_achievement = jQuery('.choice_achievement');
 const $ac_add_popup_body = jQuery('.ac_add_popup_body');
 const $add_achievements = jQuery('.add_achievements');
+const $edit_ac_form = $('.edit_ac_form');
 
 function acClosePopup() {
     $ac_overlay.css({'opacity':'0', 'pointer-events': 'none'});
@@ -24,10 +25,19 @@ function acOpenPopup() {
     $ac_edit_popup.css({'opacity':'1', 'pointer-events': 'all'});
 }
 
+let formHTML = '';
+
 $edit_achievements.on('click', function() {
-    $('.ac_pop_title').val($(this).parent().find('.ac_edit_title').text());
-    $('.ac_pop_desc').val($(this).parent().find('.ac_edit_description').text());
-    $('.ac_id').val($(this).parent().attr('data-ac-id'));
+    if ($edit_ac_form.find('.ac_pop_title').length) formHTML = $edit_ac_form.html();
+
+    if ($(this).data('acDefault') == true) {
+        $edit_ac_form.html('<p style="margin-top:18px;">Изменить достижение можно на вкладе Настройки</p>');
+    } else {
+        $edit_ac_form.html(formHTML);
+        $('.ac_pop_title').val($(this).parent().find('.ac_edit_title').text());
+        $('.ac_pop_desc').val($(this).parent().find('.ac_edit_description').text());
+        $('.ac_id').val($(this).parent().attr('data-ac-id'));
+    }
     acOpenPopup();
 });
 
@@ -43,7 +53,7 @@ jQuery(document).ready( function($) {
     $ac_delete_text.on('click', function() {
         const to_delete = confirm('Действительно хотите удалить достижение? Оно так же будет удалено у всех пользователех.');
         if (!to_delete) return;
-        console.log($(this).parent().find('.ac_image').attr('src'))
+
         let data = {
             'action': 'delete_achievement',
             'id': $(this).parent().attr('data-ac-id'),

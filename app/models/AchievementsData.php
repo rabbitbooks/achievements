@@ -50,7 +50,7 @@ class AchievementsData
 		$wpdb->delete('ac_user_achievements', ['ac_id' => $id]);
 	}
 
-	public function getUserAchievementsDataByFlag($parameter = null, $flag = 'all')
+	public function getUserAchievementsDataByFlag($parameter = null, $flag = 'all'): array
 	{
 		global $wpdb;
 		$result = [];

@@ -98,6 +98,13 @@ address {
     line-height: inherit;
 }
 
+ol,
+ul,
+dl {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
 ol ol,
 ul ul,
 ol ul,

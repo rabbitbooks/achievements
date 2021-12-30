@@ -23,25 +23,39 @@
 
 require_once 'app/services/helpers.php';
 spl_autoload_register(function ($className) {
-	$file = __DIR__ . '/' . str_replace('\\','/',$className) . '.php';
-	if(file_exists($file)) {
+	$file = __DIR__ . '/' . str_replace('\\', '/', $className) . '.php';
+	if (file_exists($file)) {
 		require_once $file;
 	}
 });
 
 use app\controllers\AdminController;
+use app\achievements\InitialAchievementsState;
+use app\achievements\InitialAchievementsDispenser;
 
 class Achievements
 {
-	protected $adminController;
+	protected InitialAchievementsDispenser $dispenser;
 
 	public function __construct()
 	{
-		$this->adminController = new AdminController();
 		$this->setDefaultState();
+
+		new AdminController;
+
+		add_action('init', [$this, 'updateUser']);
 	}
 
-	protected function setDefaultState()
+	public function updateUser()
+	{
+		if (get_current_user_id() == 0) return false;
+
+		$this->dispenser = new InitialAchievementsDispenser(get_current_user_id());
+
+		$this->dispenser->updateUser();
+	}
+
+	public function setDefaultState()
 	{
 		global $wpdb;
 
@@ -50,10 +64,12 @@ class Achievements
 			`title` VARCHAR(100) NOT NULL, 
     		`description` TEXT NOT NULL, 
     		`file_name` VARCHAR(100) NOT NULL, 
+    		`is_default` BOOLEAN NOT NULL DEFAULT FALSE,
     		PRIMARY KEY (`id`)) 
     		ENGINE = InnoDB;";
 
 		$wpdb->query($sql);
+		$wpdb->query("ALTER TABLE `ac_achievements` ADD UNIQUE(`title`);");
 
 		$sql = "CREATE TABLE IF NOT EXISTS `ac_user_achievements` 
 			(`id` INT NOT NULL AUTO_INCREMENT,
@@ -65,7 +81,29 @@ class Achievements
     		ENGINE = InnoDB;";
 
 		$wpdb->query($sql);
+
+		$sql = "CREATE TABLE IF NOT EXISTS `ac_service` 
+				(`parameter` VARCHAR(256) NOT NULL, 
+    			`value` TEXT NOT NULL,
+    			`bool_value` BOOLEAN NULL DEFAULT NULL,
+    			PRIMARY KEY (`parameter`)) 
+    			ENGINE = InnoDB CHARSET=utf8 
+    			COLLATE utf8_general_ci;";
+
+		$wpdb->query($sql);
+
+		$sql = "CREATE TABLE IF NOT EXISTS `ac_user_data` 
+				(`user_id` INT NOT NULL, 
+				`last_update` INT(10) NOT NULL, 
+    			`bool_value` BOOLEAN NULL DEFAULT FALSE,
+    			PRIMARY KEY (`user_id`))
+    			ENGINE = InnoDB CHARSET=utf8 
+    			COLLATE utf8_general_ci;";
+
+		$wpdb->query($sql);
+
+		new InitialAchievementsState;
 	}
 }
 
-$achievements = new Achievements();
+$achievement = new Achievements;

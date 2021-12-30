@@ -3,7 +3,7 @@ define('UPLOADS_URL', plugin_dir_url('achievements') . 'achievements/app/src/upl
 ?>
 <h1><?php echo $page_title ?></h1>
 <div class="tabs">
-    <input type="radio" name="inset" value="" id="tab_1" checked>
+    <input type="radio" name="inset" value="" id="tab_1" >
     <label for="tab_1"><?php echo $add_achievement ?></label>
 
     <input type="radio" name="inset" value="" id="tab_2">
@@ -11,6 +11,9 @@ define('UPLOADS_URL', plugin_dir_url('achievements') . 'achievements/app/src/upl
 
     <input type="radio" name="inset" value="" id="tab_3">
     <label for="tab_3"><?php echo $add_achievement_to_user ?></label>
+
+    <input type="radio" name="inset" value="" id="tab_4" checked>
+    <label for="tab_4">Настройки</label>
 
     <div id="txt_1">
         <form action="<?php echo plugins_url('/achievements/app/services/form_handler.php') ?>" method="POST" enctype="multipart/form-data">
@@ -36,8 +39,10 @@ define('UPLOADS_URL', plugin_dir_url('achievements') . 'achievements/app/src/upl
                     <h5 class="ac_edit_title"><?php echo $achievement['title'] ?></h5>
                     <p class="ac_edit_description"><?php echo $achievement['description'] ?></p>
                     <div class="ac_edit_item_overlay"></div>
-                    <h4 class="ac_edit_text">Изменить</h4>
+                    <h4 data-ac-default="<?php echo $achievement['is_default']; ?>" class="ac_edit_text">Изменить</h4>
+                    <?php if (!$achievement['is_default']): ?>
                     <h4 class="ac_delete_text">Удалить</h4>
+                    <?php endif; ?>
                 </div>
 			<?php
 			endforeach;
@@ -47,7 +52,7 @@ define('UPLOADS_URL', plugin_dir_url('achievements') . 'achievements/app/src/upl
         <div class="ac_edit_popup">
             <div class="ac_close_popup">X</div>
             <div class="ac_edit_popup_wrapper">
-                <form action="<?php echo plugins_url('/achievements/app/services/form_handler.php') ?>" method="POST" enctype="multipart/form-data">
+                <form class="edit_ac_form" action="<?php echo plugins_url('/achievements/app/services/form_handler.php') ?>" method="POST" enctype="multipart/form-data">
                     <h3>Изменить достижение</h3>
                     <input required name="ac_edit_title" class="ac_pop_title" type="text">
                     <br><br>
@@ -142,5 +147,16 @@ define('UPLOADS_URL', plugin_dir_url('achievements') . 'achievements/app/src/upl
         <br>
         <button class="btn btn-primary add_achievements">Добавить</button>
         <div class="ac_add_result"></div>
+    </div>
+    <div id="txt_4">
+        <form action="<?php echo plugins_url('/achievements/app/services/form_handler.php') ?>" method="POST">
+			<?php echo $achievement_settings['oldtimer']['title']; ?>
+            <?php echo $achievement_settings['oldtimer']['days']; ?>
+			<?php echo $achievement_settings['oldtimer']['is_active']; ?>
+            <br>
+            <pre>
+			    <?php var_dump(get_current_user_id()) ?>
+            </pre>
+        </form>
     </div>
 </div>

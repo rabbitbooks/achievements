@@ -14,10 +14,8 @@ class FrontController
 
 	public function __construct()
 	{
-
 		$this->view = new View(__DIR__ . '/../templates');
 		$this->data = new AchievementsData();
-
 	}
 
 	public function renderUserAchievements()
@@ -27,5 +25,4 @@ class FrontController
 			'achievements_data_all' => $this->data->getUserAchievementsDataByFlag(),
 		]);
 	}
-
 }

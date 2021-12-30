@@ -5,12 +5,14 @@ namespace app\controllers;
 
 use app\view\View;
 use app\models\AchievementsData;
+use app\achievements\InitialAchievementsSettings;
 
 
 class AdminController
 {
 	private View $view;
 	private AchievementsData $data;
+	private InitialAchievementsSettings $settings;
 
 	public function __construct()
 	{
@@ -18,6 +20,7 @@ class AdminController
 
 		$this->view = new View(__DIR__ . '/../templates');
 		$this->data = new AchievementsData();
+		$this->settings = new InitialAchievementsSettings();
 
 		$this->enqueue_styles();
 	}
@@ -30,12 +33,11 @@ class AdminController
 
 	public function enqueue_styles()
 	{
-		wp_enqueue_style('achievements-style', plugins_url('achievements/app/src/achievements-style.css', 'achievements'), [], null);
-		wp_enqueue_script('commons', plugins_url('achievements/app/src/commons.js', 'achievements'), ['jquery'], null, true);
+//		if ($_GET['page'] != 'achievements') return false;
 
-		if ($_GET['page'] == 'achievements') {
-			wp_enqueue_style('achievements-bootstrap', plugins_url('achievements/app/src/achievements-bootstrap.css', 'achievements'), ['achievements-style'], null);
-		}
+		wp_enqueue_style('achievements-style', plugins_url('achievements/app/src/achievements-style.css', 'achievements'), [], null);
+		wp_enqueue_style('achievements-bootstrap', plugins_url('achievements/app/src/achievements-bootstrap.css', 'achievements'), ['achievements-style'], null);
+		wp_enqueue_script('commons', plugins_url('achievements/app/src/commons.js', 'achievements'), ['jquery'], null, true);
 	}
 
 	public function build()
@@ -48,6 +50,7 @@ class AdminController
 			'user_achievement' => 'Достижения пользователей',
 			'users_achievements_data' => $this->data->getUserAchievementsDataByFlag(),
 			'add_achievement_to_user' => 'Выдать достижение',
+			'achievement_settings' => $this->settings->allSettings,
 		]);
 	}
 
